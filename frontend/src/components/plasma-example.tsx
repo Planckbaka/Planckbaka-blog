@@ -1,5 +1,5 @@
 "use client"
-import PlasmaBackground from "./plasma";
+import PlasmaBackground from "./plasma-damo";
 
 export default function PlasmaExample() {
   return (
