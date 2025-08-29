@@ -6,6 +6,7 @@ import ThemeText from "@/components/theme-text";
 import PlasmaBackground from "@/components/plasma-damo";
 import { Github } from "lucide-react";
 import {Button} from "@/components/ui/button";
+import LogoLoopDemo from "@/components/logo-loop-demo";
 
 
 export default function Home() {
@@ -35,6 +36,7 @@ export default function Home() {
                   </div>
               </header>
               <main className="flex-grow p-4">
+                  <LogoLoopDemo/>
                   <div className="flex items-center justify-center ">
                       <ThemeText/>
                   </div>
