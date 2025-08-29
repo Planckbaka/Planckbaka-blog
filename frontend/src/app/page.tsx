@@ -2,8 +2,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ModeToggle } from "@/components/mode-toggle";
 import NavigationMenuDemo from "@/components/NavigationMenuDemo";
-import ThemeText from "@/components/themeText";
-import PlasmaBackground from "@/components/plasma";
+import ThemeText from "@/components/theme-text";
+import PlasmaBackground from "@/components/plasma-damo";
+import { Github } from "lucide-react";
+import {Button} from "@/components/ui/button";
 
 
 export default function Home() {
@@ -15,7 +17,7 @@ export default function Home() {
                       <div className="flex items-center gap-2">
                           <div>
                               <Avatar>
-                                  <AvatarImage src="https://github.com/shadcn.png" />
+                                  <AvatarImage src="https://github.com/Planckbaka.png" />
                                   <AvatarFallback>CN</AvatarFallback>
                               </Avatar>
                           </div>
@@ -23,7 +25,11 @@ export default function Home() {
                               <NavigationMenuDemo />
                           </div>
                       </div>
-                      <div>
+                      <div className="flex flex-row items-center gap-2">
+                          <Button className="flex items-center space-x-2 px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800">
+                              <Github className="h-4 w-4" />
+                              <span className="text-sm">GitHub</span>
+                          </Button>
                           <ModeToggle />
                       </div>
                   </div>

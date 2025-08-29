@@ -1,5 +1,5 @@
 "use client"
-import Plasma from "./reactbits-animations/Plasma";
+import Plasma from "./reactbits-animations/plasma";
 import { ReactNode } from "react";
 
 interface PlasmaBackgroundProps {

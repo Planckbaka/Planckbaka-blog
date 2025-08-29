@@ -1,5 +1,5 @@
 "use client"
-import BlurText from "@/components/reactbits-animations/BlurText";
+import BlurText from "@/components/reactbits-animations/blur-text";
 
 const handleAnimationComplete = () => {
     console.log('Animation completed!');
