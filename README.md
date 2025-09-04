@@ -291,8 +291,8 @@ npm run start
 ## 📞 联系方式
 
 - 作者: Aki Wayne
-- 邮箱: your-email@example.com
-- 项目链接: [https://github.com/your-username/Planckbaka-blog](https://github.com/your-username/Planckbaka-blog)
+- 邮箱: akiwayne24@gmail.com
+- 项目链接: [https://github.com/Planckbaka/Planckbaka-blog](https://github.com/Planckbaka/Planckbaka-blog)
 
 ## 🙏 致谢
 
