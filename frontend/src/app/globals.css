@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @layer base {
   * {
@@ -22,7 +22,6 @@
     background-position: 0% 50%;
   }
 }
-
 /* Gradient 动画工具类 */
 .animate-gradient {
   animation: gradient 8s linear infinite;
