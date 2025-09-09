@@ -2,7 +2,7 @@ import Carousel from '@/components/Carousel';
 
 function CarouselList() {
   return (
-    <div style={{ height: '600px', position: 'relative' }}>
+    <div style={{ height: '300px', position: 'relative' }}>
       <Carousel
         baseWidth={300}
         autoplay={true}

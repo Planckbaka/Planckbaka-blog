@@ -2,6 +2,7 @@ import LogoLoopDemo from '@/components/logo-loop-demo';
 import ConnectIcons from '@/components/ui/connect-icons';
 import GradientText from '@/components/GradientText';
 import CarouselList from '@/components/carousel-list';
+import TextRotating from '@/components/text-rotating';
 
 export default function Home() {
   return (
@@ -34,7 +35,7 @@ export default function Home() {
       <main className='flex flex-grow flex-col p-4'>
         <section
           id='home'
-          className='flex flex-col max-w-5xl mx-auto md:py-24 pb-14'
+          className='flex flex-col max-w-5xl mx-auto md:py-24 pb-4'
         >
           <p className='text-md md:text-lg font-mono text text-muted-foreground'>
             Hi I am Aki Wayne
@@ -47,7 +48,7 @@ export default function Home() {
                 showBorder={false}
                 className='custom-class'
               >
-                Software Developer
+                Soxftware Developer
               </GradientText>
             </h1>
             <p className='md:text-2xl font-mono text-muted-foreground'>
@@ -57,8 +58,14 @@ export default function Home() {
           </div>
           <ConnectIcons />
           <LogoLoopDemo />
-          <div className='flex flex-row '>
-            <CarouselList />
+          <div className='flex flex-col lg:flex-row items-center gap-8 '>
+            <div>
+              <CarouselList />
+            </div>
+
+            <div>
+              <TextRotating />
+            </div>
           </div>
         </section>
       </main>
