@@ -3,6 +3,8 @@ import ConnectIcons from '@/components/ui/connect-icons';
 import GradientText from '@/components/GradientText';
 import CarouselList from '@/components/carousel-list';
 import TextRotating from '@/components/text-rotating';
+import {Separator} from '@/components/ui/separator';
+import ContactForm from '@/components/contact-form';
 
 export default function Home() {
   return (
@@ -10,7 +12,7 @@ export default function Home() {
       <main className='flex flex-grow flex-col p-4'>
         <section
           id='home'
-          className='flex flex-col max-w-5xl mx-auto md:py-24 pb-4'
+          className='flex flex-col max-w-5xl mx-auto md:py-4 pb-4'
         >
           <p className='text-md md:text-lg font-mono text text-muted-foreground'>
             Hi I am Aki Wayne
@@ -42,6 +44,27 @@ export default function Home() {
               <TextRotating />
             </div>
           </div>
+          <Separator className="my-4 " />
+        </section>
+
+        <section
+          id='contact'
+          className='flex flex-col max-w-5xl mx-auto md:py-6 md:pb-24'
+        >
+
+
+          <div className='flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-8 md:gap-4'>
+            <div className='flex flex-col'>
+            <p className='text-md md:text-lg font-mono text text-muted-foreground'>
+            Let's connect
+          </p>
+            <h2 className='text-5xl md:text-6xl text-pretty leading-none pb-8'>Contact Me</h2>
+           <p className='text-md md:text-lg font-mono text text-muted-foreground'>Have a question or a project in mind? Feel free to reach out.</p>
+          </div>
+            <ContactForm />
+          </div>
+
+
         </section>
       </main>
       <footer className='flex py-4 items-center justify-between px-4'>
