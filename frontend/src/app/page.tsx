@@ -7,31 +7,6 @@ import TextRotating from '@/components/text-rotating';
 export default function Home() {
   return (
     <div className='flex flex-col min-h-screen w-full h-full md:mt-20'>
-      {/*<header className="accent-slate-900 p-2 ">*/}
-      {/*    <div className="flex justify-between items-center">*/}
-      {/*        <div className="flex items-center gap-2">*/}
-      {/*            <div onClick={() => router.push("#about")}>*/}
-      {/*                <Avatar>*/}
-      {/*                    <AvatarImage src="https://github.com/Planckbaka.png" />*/}
-      {/*                    <AvatarFallback>CN</AvatarFallback>*/}
-      {/*                </Avatar>*/}
-      {/*            </div>*/}
-      {/*            <div>*/}
-      {/*                <NavigationMenuDemo />*/}
-      {/*            </div>*/}
-      {/*        </div>*/}
-      {/*        <div className="flex flex-row items-center gap-2">*/}
-      {/*            <Button*/}
-      {/*                className="flex items-center space-x-2 px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"*/}
-      {/*                onClick={() => {router.push("http://github.com/Planckbaka")}}*/}
-      {/*            >*/}
-      {/*                <Github className="h-4 w-4" />*/}
-      {/*                <span className="text-sm">GitHub</span>*/}
-      {/*            </Button>*/}
-      {/*            <ModeToggle />*/}
-      {/*        </div>*/}
-      {/*    </div>*/}
-      {/*</header>*/}
       <main className='flex flex-grow flex-col p-4'>
         <section
           id='home'
@@ -48,7 +23,7 @@ export default function Home() {
                 showBorder={false}
                 className='custom-class'
               >
-                Soxftware Developer
+                Software Developer
               </GradientText>
             </h1>
             <p className='md:text-2xl font-mono text-muted-foreground'>

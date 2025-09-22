@@ -64,8 +64,6 @@ const DEFAULT_ITEMS: CarouselItem[] = [
 const DRAG_BUFFER = 0;
 const VELOCITY_THRESHOLD = 500;
 const GAP = 16;
-const SPRING_OPTIONS = { type: 'spring', stiffness: 300, damping: 30 };
-
 export default function Carousel({
   items = DEFAULT_ITEMS,
   baseWidth = 300,
@@ -83,7 +81,7 @@ export default function Carousel({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const x = useMotionValue(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [isResetting, setIsResetting] = useState<boolean>(false);
+  const [, setIsResetting] = useState<boolean>(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -124,9 +122,6 @@ export default function Carousel({
     carouselItems.length,
     pauseOnHover,
   ]);
-
-  const effectiveTransition = isResetting ? { duration: 0 } : SPRING_OPTIONS;
-
   const handleAnimationComplete = () => {
     if (loop && currentIndex === carouselItems.length - 1) {
       setIsResetting(true);
@@ -192,7 +187,6 @@ export default function Carousel({
         }}
         onDragEnd={handleDragEnd}
         animate={{ x: -(currentIndex * trackItemOffset) }}
-        transition={effectiveTransition}
         onAnimationComplete={handleAnimationComplete}
       >
         {carouselItems.map((item, index) => {
@@ -218,7 +212,6 @@ export default function Carousel({
                 rotateY: rotateY,
                 ...(round && { borderRadius: '50%' }),
               }}
-              transition={effectiveTransition}
             >
               <div className={`${round ? 'p-0 m-0' : 'mb-4 p-5'}`}>
                 <span className='flex h-[28px] w-[28px] items-center justify-center rounded-full bg-[#060010]'>
