@@ -8,6 +8,12 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.1.12-38B2AC)
 
+## 🌐 在线演示
+
+**部署地址**: [https://blog-f1ud1uxlm-planckbakas-projects.vercel.app](https://blog-f1ud1uxlm-planckbakas-projects.vercel.app)
+
+> 💡 **提示**: 项目已成功部署到 Vercel，支持自动部署和 HTTPS 访问
+
 ## 📖 项目简介
 
 Planckbaka 是一个现代化的个人博客平台，专为技术从业者、内容创作者和数字游牧者设计。平台以故事叙述为核心，通过多维度的数据展示和交互式体验，打造独特的个人数字名片。
@@ -22,6 +28,10 @@ Planckbaka 是一个现代化的个人博客平台，专为技术从业者、内
 - 🌐 **多语言支持**：中英文切换，国际化内容管理
 - 🎭 **主题切换**：明暗主题，自定义配色方案
 - 📱 **移动优先**：完全响应式设计，触摸优化
+- ⚡ **性能优化**：使用 Turbopack 构建，支持增量静态再生成
+- 🎯 **交互体验**：GSAP 动画，Lenis 平滑滚动，Motion 过渡效果
+- 🔧 **开发体验**：TypeScript 类型安全，ESLint + Prettier 代码规范
+- 🚀 **部署便捷**：一键部署到 Vercel，支持自动 CI/CD
 
 ## 🏗️ 技术架构
 
@@ -30,11 +40,22 @@ Planckbaka 是一个现代化的个人博客平台，专为技术从业者、内
 - **框架**: Next.js 15.5.0 + React 19.1.0
 - **语言**: TypeScript 5.x
 - **样式**: Tailwind CSS 4.1.12
-- **组件库**: shadcn/ui + Radix UI
-- **动画**: GSAP + Motion + Lenis
-- **图标**: Lucide React + React Icons
-- **表单**: React Hook Form + Zod
-- **主题**: next-themes
+- **组件库**: shadcn/ui + Radix UI 组件
+  - `@radix-ui/react-avatar` ^1.1.10
+  - `@radix-ui/react-dropdown-menu` ^2.1.16
+  - `@radix-ui/react-navigation-menu` ^1.2.14
+  - `@radix-ui/react-select` ^2.2.6
+- **动画库**: 
+  - GSAP ^3.13.0 (高性能动画)
+  - Motion ^12.23.12 (React 动画)
+  - Lenis ^1.3.11 (平滑滚动)
+- **图标**: Lucide React ^0.540.0 + React Icons ^5.5.0
+- **表单**: React Hook Form ^7.62.0 + Zod ^4.1.5
+- **主题**: next-themes ^0.4.6
+- **工具库**: 
+  - class-variance-authority ^0.7.1
+  - clsx ^2.1.1
+  - tailwind-merge ^3.3.1
 
 ### 后端架构（推荐方案）
 
@@ -149,10 +170,10 @@ Planckbaka-blog/
 ### 可用脚本
 
 ```bash
-# 开发模式（使用 Turbopack）
+# 开发模式（使用 Turbopack 加速构建）
 npm run dev
 
-# 构建生产版本
+# 构建生产版本（使用 Turbopack）
 npm run build
 
 # 启动生产服务器
@@ -163,15 +184,52 @@ npm run lint
 
 # 自动修复代码问题
 npm run lint:fix
+
+# 代码格式化
+npm run format
+
+# 检查代码格式
+npm run format:check
+
+# TypeScript 类型检查
+npm run type-check
+
+# 运行所有检查（类型检查 + 代码检查 + 格式检查）
+npm run check-all
 ```
 
 ### 代码规范
 
-- 使用 TypeScript 进行类型检查
-- 遵循 ESLint 规则
-- 使用 Prettier 格式化代码
-- 组件采用函数式组件 + Hooks
-- 样式使用 Tailwind CSS 类名
+#### 基础规范
+- **TypeScript**: 严格模式，完整类型注解
+- **ESLint**: 基于 Next.js 推荐配置 + Prettier 集成
+- **Prettier**: 统一代码格式，2 空格缩进
+- **组件**: 函数式组件 + React Hooks
+- **样式**: Tailwind CSS 原子类，避免内联样式
+
+#### 命名规范
+- **组件**: PascalCase (如 `UserProfile.tsx`)
+- **文件**: kebab-case (如 `user-profile.tsx`)
+- **变量/函数**: camelCase (如 `getUserData`)
+- **常量**: UPPER_SNAKE_CASE (如 `API_BASE_URL`)
+- **类型/接口**: PascalCase (如 `UserData`, `ApiResponse`)
+
+#### 提交规范
+```bash
+# 提交格式
+<type>(<scope>): <description>
+
+# 示例
+feat(components): add user profile component
+fix(api): resolve authentication issue
+docs(readme): update installation guide
+style(ui): improve button hover effects
+```
+
+#### 类型定义
+- 优先使用 `interface` 而非 `type`
+- 为所有 props 定义接口
+- 使用泛型提高代码复用性
 
 ### 组件开发
 
@@ -196,15 +254,40 @@ export function Component({ className, children }: ComponentProps) {
 
 ## 🔧 配置说明
 
-### 环境变量
+### 环境变量配置
+
+创建 `.env.local` 文件并配置以下环境变量：
 
 ```bash
-# .env.local
+# 应用基础配置
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_APP_NAME="Planckbaka Blog"
+NEXT_PUBLIC_APP_DESCRIPTION="现代化个人博客平台"
+
+# Supabase 配置（可选，用于数据存储）
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+
+# AI 服务配置（可选，用于智能功能）
 OPENAI_API_KEY=your_openai_api_key
+
+# 分析和监控（可选）
+NEXT_PUBLIC_GA_ID=your_google_analytics_id
+VERCEL_ANALYTICS_ID=your_vercel_analytics_id
+
+# 邮件服务（可选，用于联系表单）
+EMAIL_SERVER_HOST=smtp.gmail.com
+EMAIL_SERVER_PORT=587
+EMAIL_SERVER_USER=your_email@gmail.com
+EMAIL_SERVER_PASSWORD=your_app_password
+EMAIL_FROM=noreply@yourdomain.com
 ```
+
+> **注意**: 
+> - 生产环境请使用真实的 API 密钥
+> - 不要将 `.env.local` 文件提交到版本控制
+> - Vercel 部署时需要在项目设置中配置环境变量
 
 ### Tailwind CSS 配置
 
