@@ -345,13 +345,47 @@ export default config;
 
 ### Vercel 部署（推荐）
 
-1. 连接 GitHub 仓库到 Vercel
-2. 配置环境变量
-3. 自动部署
+项目已成功部署到 Vercel: [https://blog-f1ud1uxlm-planckbakas-projects.vercel.app](https://blog-f1ud1uxlm-planckbakas-projects.vercel.app)
+
+#### 部署步骤
+
+1. **连接仓库**
+   ```bash
+   # 推送代码到 GitHub
+   git add .
+   git commit -m "feat: initial commit"
+   git push origin main
+   ```
+
+2. **Vercel 配置**
+   - 登录 [Vercel Dashboard](https://vercel.com/dashboard)
+   - 点击 "New Project" 导入 GitHub 仓库
+   - 选择 `frontend` 目录作为根目录
+   - 配置构建命令: `npm run build`
+   - 配置输出目录: `.next`
+
+3. **环境变量配置**
+   在 Vercel 项目设置中添加环境变量:
+   ```
+   NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app
+   NEXT_PUBLIC_APP_NAME=Planckbaka Blog
+   # 其他必要的环境变量...
+   ```
+
+4. **自动部署**
+   - 每次推送到 `main` 分支自动触发部署
+   - 支持预览部署（Pull Request）
+   - 支持自定义域名绑定
 
 ### 手动部署
 
 ```bash
+# 进入前端目录
+cd frontend
+
+# 安装依赖
+npm install
+
 # 构建项目
 npm run build
 
@@ -359,13 +393,121 @@ npm run build
 npm run start
 ```
 
+### Docker 部署
+
+```dockerfile
+# Dockerfile
+FROM node:18-alpine AS base
+
+# 安装依赖
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci
+
+# 构建应用
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+# 生产镜像
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV production
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+EXPOSE 3000
+ENV PORT 3000
+
+CMD ["node", "server.js"]
+```
+
 ## 🤝 贡献指南
 
-1. Fork 项目
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开 Pull Request
+我们欢迎所有形式的贡献！请遵循以下步骤：
+
+### 开发流程
+
+1. **Fork 项目**
+   ```bash
+   # Fork 仓库到你的 GitHub 账户
+   # 然后克隆到本地
+   git clone https://github.com/your-username/Planckbaka-blog.git
+   cd Planckbaka-blog
+   ```
+
+2. **设置开发环境**
+   ```bash
+   # 安装依赖
+   cd frontend
+   npm install
+   
+   # 创建环境变量文件
+   cp .env.example .env.local
+   
+   # 启动开发服务器
+   npm run dev
+   ```
+
+3. **创建特性分支**
+   ```bash
+   git checkout -b feature/amazing-feature
+   # 或
+   git checkout -b fix/bug-description
+   ```
+
+4. **开发和测试**
+   ```bash
+   # 运行所有检查
+   npm run check-all
+   
+   # 确保构建成功
+   npm run build
+   ```
+
+5. **提交更改**
+   ```bash
+   git add .
+   git commit -m "feat(component): add amazing feature"
+   ```
+
+6. **推送并创建 PR**
+   ```bash
+   git push origin feature/amazing-feature
+   # 然后在 GitHub 上创建 Pull Request
+   ```
+
+### 贡献类型
+
+- 🐛 **Bug 修复**: 修复现有功能的问题
+- ✨ **新功能**: 添加新的功能或组件
+- 📚 **文档**: 改进文档和注释
+- 🎨 **样式**: 改进 UI/UX 设计
+- ⚡ **性能**: 性能优化
+- 🔧 **配置**: 构建配置和工具改进
+
+### 代码审查
+
+- 所有 PR 都需要通过代码审查
+- 确保通过所有自动化检查
+- 遵循项目的代码规范
+- 添加适当的测试（如适用）
+
+### 问题报告
+
+如果发现 bug 或有功能建议，请：
+1. 搜索现有 issues 避免重复
+2. 使用 issue 模板创建详细报告
+3. 提供复现步骤和环境信息
 
 ## 📄 许可证
 
@@ -373,9 +515,18 @@ npm run start
 
 ## 📞 联系方式
 
-- 作者: Aki Wayne
-- 邮箱: your-email@example.com
-- 项目链接: [https://github.com/your-username/Planckbaka-blog](https://github.com/your-username/Planckbaka-blog)
+- **作者**: Aki Wayne (Planckbaka)
+- **项目仓库**: [GitHub - Planckbaka-blog](https://github.com/planckbaka/Planckbaka-blog)
+- **在线演示**: [https://blog-f1ud1uxlm-planckbakas-projects.vercel.app](https://blog-f1ud1uxlm-planckbakas-projects.vercel.app)
+- **技术支持**: 通过 GitHub Issues 提交问题
+- **功能建议**: 欢迎通过 Pull Request 贡献代码
+
+### 社交媒体
+
+- **GitHub**: [@planckbaka](https://github.com/planckbaka)
+- **个人博客**: [Planckbaka Blog](https://blog-f1ud1uxlm-planckbakas-projects.vercel.app)
+
+> 💡 如有任何问题或建议，欢迎通过 GitHub Issues 与我们联系！
 
 ## 🙏 致谢
 
