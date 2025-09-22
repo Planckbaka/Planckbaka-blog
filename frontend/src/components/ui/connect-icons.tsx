@@ -22,7 +22,7 @@ export function ConnectIcons() {
         variant='ghost'
         size='icon'
         className='size-16 rounded-2xl border-1 border-slate-500'
-        onClick={() => router.push('/')}
+        onClick={() => router.push('https://www.linkedin.com/in/zhang-weihuang-78753b382/')}
       >
         <FaLinkedin className='size-8' />
       </Button>
@@ -30,7 +30,7 @@ export function ConnectIcons() {
         variant='ghost'
         size='icon'
         className='size-16 rounded-2xl border-1 border-slate-500'
-        onClick={() => router.push('/login')}
+        onClick={() => router.push('mailto:akiwayne24@gmail.com')}
       >
         <SiGmail className='size-8' />
       </Button>
