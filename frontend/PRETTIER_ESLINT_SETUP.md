@@ -3,6 +3,7 @@
 ## 📋 已完成的配置
 
 ### 1. 安装的依赖包
+
 - ✅ `prettier` - 代码格式化工具
 - ✅ `eslint-config-prettier` - 解决 Prettier 与 ESLint 规则冲突
 - ✅ `eslint-plugin-prettier` - 将 Prettier 作为 ESLint 规则运行
@@ -10,6 +11,7 @@
 ### 2. 创建的配置文件
 
 #### `.prettierrc` - Prettier 配置
+
 ```json
 {
   "semi": true,
@@ -29,25 +31,30 @@
 ```
 
 #### `.prettierignore` - Prettier 忽略文件
+
 - 排除 `node_modules/`, `.next/`, `build/` 等目录
 - 排除配置文件和生成文件
 
 #### `eslint.config.mjs` - ESLint 配置
+
 - 集成了 Prettier 规则
 - 配置了 TypeScript 和 React 相关规则
 - 设置了合理的忽略目录
 
 #### `.editorconfig` - 编辑器配置
+
 - 确保跨编辑器的代码风格一致性
 
 ### 3. VS Code 配置
 
 #### `.vscode/settings.json`
+
 - 启用保存时自动格式化
 - 设置 Prettier 为默认格式化工具
 - 配置 ESLint 自动修复
 
 #### `.vscode/extensions.json`
+
 - 推荐安装的 VS Code 扩展列表
 
 ### 4. Package.json 脚本
@@ -107,6 +114,7 @@ npm run check-all
 ## ⚙️ 配置说明
 
 ### Prettier 规则
+
 - 使用分号
 - 单引号
 - 行宽 80 字符
@@ -114,12 +122,14 @@ npm run check-all
 - 尾随逗号（ES5 兼容）
 
 ### ESLint 规则
+
 - 继承 Next.js 推荐配置
 - TypeScript 严格模式
 - React Hooks 规则
 - Prettier 集成
 
 ### 忽略文件
+
 - 构建输出目录（`.next/`, `build/`, `dist/`）
 - 依赖目录（`node_modules/`）
 - 配置文件
@@ -128,17 +138,19 @@ npm run check-all
 ## 🔧 自定义配置
 
 ### 修改 Prettier 规则
+
 编辑 `.prettierrc` 文件：
 
 ```json
 {
-  "semi": false,        // 不使用分号
+  "semi": false, // 不使用分号
   "singleQuote": false, // 使用双引号
-  "printWidth": 120     // 行宽 120 字符
+  "printWidth": 120 // 行宽 120 字符
 }
 ```
 
 ### 修改 ESLint 规则
+
 编辑 `eslint.config.mjs` 文件的 `rules` 部分：
 
 ```javascript
@@ -187,6 +199,7 @@ rules: {
 ### 重置配置
 
 如果遇到问题，可以删除以下文件重新配置：
+
 - `.prettierrc`
 - `eslint.config.mjs`
 - `.vscode/settings.json`
