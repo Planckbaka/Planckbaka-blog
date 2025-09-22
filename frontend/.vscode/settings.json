@@ -1,0 +1,52 @@
+{
+  // 编辑器设置
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  
+  // ESLint 设置
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.format.enable": false,
+  
+  // Prettier 设置
+  "prettier.requireConfig": true,
+  "prettier.useEditorConfig": false,
+  
+  // 文件关联
+  "files.associations": {
+    "*.css": "tailwindcss",
+    "*.scss": "tailwindcss"
+  },
+  
+  // TypeScript 设置
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.suggest.autoImports": true,
+  
+  // 文件排除
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/out": true,
+    "**/build": true
+  },
+  
+  // 搜索排除
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/out": true,
+    "**/build": true,
+    "**/package-lock.json": true
+  }
+}

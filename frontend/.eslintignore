@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Generated files
+next-env.d.ts
+
+# Config files
+*.config.js
+*.config.mjs
+*.config.ts
+postcss.config.mjs
+next.config.ts
+tailwind.config.js
+tailwind.config.ts
+
+# Coverage reports
+coverage/
+
+# Storybook
+.storybook/
+storybook-static/
+
+# Public assets
+public/
+
+# Temporary files
+*.tmp
+*.temp

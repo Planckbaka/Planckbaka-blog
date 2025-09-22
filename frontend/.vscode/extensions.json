@@ -1,0 +1,23 @@
+{
+  "recommendations": [
+    // ESLint 扩展
+    "dbaeumer.vscode-eslint",
+    
+    // Prettier 扩展
+    "esbenp.prettier-vscode",
+    
+    // TypeScript 相关
+    "ms-vscode.vscode-typescript-next",
+    
+    // React 相关
+    "ms-vscode.vscode-react-refactor",
+    "bradlc.vscode-tailwindcss",
+    
+    // 其他有用的扩展
+    "ms-vscode.vscode-json",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    "ms-vscode.vscode-css-peek",
+    "bradlc.vscode-tailwindcss"
+  ]
+}
