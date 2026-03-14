@@ -50,6 +50,14 @@ export interface RotatingTextProps
   elementLevelClassName?: string;
 }
 
+function splitIntoCharacters(text: string): string[] {
+  if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+    const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
+    return Array.from(segmenter.segment(text), segment => segment.segment);
+  }
+  return Array.from(text);
+}
+
 const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
   (
     {
@@ -75,14 +83,6 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
     ref
   ) => {
     const [currentTextIndex, setCurrentTextIndex] = useState<number>(0);
-
-    const splitIntoCharacters = (text: string): string[] => {
-      if (typeof Intl !== 'undefined' && Intl.Segmenter) {
-        const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
-        return Array.from(segmenter.segment(text), segment => segment.segment);
-      }
-      return Array.from(text);
-    };
 
     const elements = useMemo(() => {
       const currentText: string = texts[currentTextIndex];
@@ -221,42 +221,45 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
             layout
             aria-hidden='true'
           >
-            {elements.map((wordObj, wordIndex, array) => {
-              const previousCharsCount = array
-                .slice(0, wordIndex)
-                .reduce((sum, word) => sum + word.characters.length, 0);
-              return (
-                <span
-                  key={wordIndex}
-                  className={cn('inline-flex', splitLevelClassName)}
-                >
-                  {wordObj.characters.map((char, charIndex) => (
-                    <motion.span
-                      key={charIndex}
-                      initial={initial}
-                      animate={animate}
-                      exit={exit}
-                      transition={{
-                        ...transition,
-                        delay: getStaggerDelay(
-                          previousCharsCount + charIndex,
-                          array.reduce(
-                            (sum, word) => sum + word.characters.length,
-                            0
-                          )
-                        ),
-                      }}
-                      className={cn('inline-block', elementLevelClassName)}
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
-                  {wordObj.needsSpace && (
-                    <span className='whitespace-pre'> </span>
-                  )}
-                </span>
+            {(() => {
+              const totalChars = elements.reduce(
+                (sum, word) => sum + word.characters.length,
+                0
               );
-            })}
+              let charOffset = 0;
+              return elements.map((wordObj, wordIndex) => {
+                const wordCharOffset = charOffset;
+                charOffset += wordObj.characters.length;
+                return (
+                  <span
+                    key={wordIndex}
+                    className={cn('inline-flex', splitLevelClassName)}
+                  >
+                    {wordObj.characters.map((char, charIndex) => (
+                      <motion.span
+                        key={charIndex}
+                        initial={initial}
+                        animate={animate}
+                        exit={exit}
+                        transition={{
+                          ...transition,
+                          delay: getStaggerDelay(
+                            wordCharOffset + charIndex,
+                            totalChars
+                          ),
+                        }}
+                        className={cn('inline-block', elementLevelClassName)}
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                    {wordObj.needsSpace && (
+                      <span className='whitespace-pre'> </span>
+                    )}
+                  </span>
+                );
+              });
+            })()}
           </motion.span>
         </AnimatePresence>
       </motion.span>
