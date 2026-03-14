@@ -95,13 +95,13 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     ) as HTMLElement;
     const endElementTop = endElement ? endElement.offsetTop : 0;
 
-    cardsRef.current.forEach((card, i) => {
+    cardsRef.current.forEach((card, cardIndex) => {
       if (!card) return;
 
       const cardTop = card.offsetTop;
-      const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
+      const triggerStart = cardTop - stackPositionPx - itemStackDistance * cardIndex;
       const triggerEnd = cardTop - scaleEndPositionPx;
-      const pinStart = cardTop - stackPositionPx - itemStackDistance * i;
+      const pinStart = cardTop - stackPositionPx - itemStackDistance * cardIndex;
       const pinEnd = endElementTop - containerHeight / 2;
 
       const scaleProgress = calculateProgress(
@@ -109,24 +109,24 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         triggerStart,
         triggerEnd
       );
-      const targetScale = baseScale + i * itemScale;
+      const targetScale = baseScale + cardIndex * itemScale;
       const scale = 1 - scaleProgress * (1 - targetScale);
-      const rotation = rotationAmount ? i * rotationAmount * scaleProgress : 0;
+      const rotation = rotationAmount ? cardIndex * rotationAmount * scaleProgress : 0;
 
       let blur = 0;
       if (blurAmount) {
         let topCardIndex = 0;
-        for (let j = 0; j < cardsRef.current.length; j++) {
-          const jCardTop = cardsRef.current[j].offsetTop;
-          const jTriggerStart =
-            jCardTop - stackPositionPx - itemStackDistance * j;
-          if (scrollTop >= jTriggerStart) {
-            topCardIndex = j;
+        for (let compareCardIndex = 0; compareCardIndex < cardsRef.current.length; compareCardIndex++) {
+          const compareCardTop = cardsRef.current[compareCardIndex].offsetTop;
+          const compareCardTriggerStart =
+            compareCardTop - stackPositionPx - itemStackDistance * compareCardIndex;
+          if (scrollTop >= compareCardTriggerStart) {
+            topCardIndex = compareCardIndex;
           }
         }
 
-        if (i < topCardIndex) {
-          const depthInStack = topCardIndex - i;
+        if (cardIndex < topCardIndex) {
+          const depthInStack = topCardIndex - cardIndex;
           blur = Math.max(0, depthInStack * blurAmount);
         }
       }
@@ -136,9 +136,9 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
       if (isPinned) {
         translateY =
-          scrollTop - cardTop + stackPositionPx + itemStackDistance * i;
+          scrollTop - cardTop + stackPositionPx + itemStackDistance * cardIndex;
       } else if (scrollTop > pinEnd) {
-        translateY = pinEnd - cardTop + stackPositionPx + itemStackDistance * i;
+        translateY = pinEnd - cardTop + stackPositionPx + itemStackDistance * cardIndex;
       }
 
       const newTransform = {
@@ -148,7 +148,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         blur: Math.round(blur * 100) / 100,
       };
 
-      const lastTransform = lastTransformsRef.current.get(i);
+      const lastTransform = lastTransformsRef.current.get(cardIndex);
       const hasChanged =
         !lastTransform ||
         Math.abs(lastTransform.translateY - newTransform.translateY) > 0.1 ||
@@ -164,10 +164,10 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         card.style.transform = transform;
         card.style.filter = filter;
 
-        lastTransformsRef.current.set(i, newTransform);
+        lastTransformsRef.current.set(cardIndex, newTransform);
       }
 
-      if (i === cardsRef.current.length - 1) {
+      if (cardIndex === cardsRef.current.length - 1) {
         const isInView = scrollTop >= pinStart && scrollTop <= pinEnd;
         if (isInView && !stackCompletedRef.current) {
           stackCompletedRef.current = true;
@@ -204,7 +204,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       wrapper: scroller,
       content: scroller.querySelector('.scroll-stack-inner') as HTMLElement,
       duration: 1.2,
-      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      easing: easingProgress => Math.min(1, 1.001 - Math.pow(2, -10 * easingProgress)),
       smoothWheel: true,
       touchMultiplier: 2,
       infinite: false,
@@ -237,8 +237,8 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     cardsRef.current = cards;
     const transformsCache = lastTransformsRef.current;
 
-    cards.forEach((card, i) => {
-      if (i < cards.length - 1) {
+    cards.forEach((card, cardIndex) => {
+      if (cardIndex < cards.length - 1) {
         card.style.marginBottom = `${itemDistance}px`;
       }
       card.style.willChange = 'transform, filter';

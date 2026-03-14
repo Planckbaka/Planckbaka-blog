@@ -23,12 +23,12 @@ const buildKeyframes = (
 ): Record<string, Array<string | number>> => {
   const keys = new Set<string>([
     ...Object.keys(from),
-    ...steps.flatMap(s => Object.keys(s)),
+    ...steps.flatMap(animationStep => Object.keys(animationStep)),
   ]);
 
   const keyframes: Record<string, Array<string | number>> = {};
-  keys.forEach(k => {
-    keyframes[k] = [from[k], ...steps.map(s => s[k])];
+  keys.forEach(propertyKey => {
+    keyframes[propertyKey] = [from[propertyKey], ...steps.map(animationStep => animationStep[propertyKey])];
   });
   return keyframes;
 };
@@ -43,7 +43,7 @@ const BlurText: React.FC<BlurTextProps> = ({
   rootMargin = '0px',
   animationFrom,
   animationTo,
-  easing = t => t,
+  easing = progress => progress,
   onAnimationComplete,
   stepDuration = 0.35,
 }) => {
@@ -91,8 +91,8 @@ const BlurText: React.FC<BlurTextProps> = ({
 
   const stepCount = toSnapshots.length + 1;
   const totalDuration = stepDuration * (stepCount - 1);
-  const times = Array.from({ length: stepCount }, (_, i) =>
-    stepCount === 1 ? 0 : i / (stepCount - 1)
+  const times = Array.from({ length: stepCount }, (_, stepIndex) =>
+    stepCount === 1 ? 0 : stepIndex / (stepCount - 1)
   );
 
   return (

@@ -74,13 +74,13 @@ export default function BounceCards({
   const pushSiblings = (hoveredIdx: number) => {
     if (!enableHover) return;
 
-    images.forEach((_, i) => {
-      const selector = `.card-${i}`;
+    images.forEach((_, cardIndex) => {
+      const selector = `.card-${cardIndex}`;
       gsap.killTweensOf(selector);
 
-      const baseTransform = transformStyles[i] || 'none';
+      const baseTransform = transformStyles[cardIndex] || 'none';
 
-      if (i === hoveredIdx) {
+      if (cardIndex === hoveredIdx) {
         const noRotation = getNoRotationTransform(baseTransform);
         gsap.to(selector, {
           transform: noRotation,
@@ -89,10 +89,10 @@ export default function BounceCards({
           overwrite: 'auto',
         });
       } else {
-        const offsetX = i < hoveredIdx ? -160 : 160;
+        const offsetX = cardIndex < hoveredIdx ? -160 : 160;
         const pushedTransform = getPushedTransform(baseTransform, offsetX);
 
-        const distance = Math.abs(hoveredIdx - i);
+        const distance = Math.abs(hoveredIdx - cardIndex);
         const delay = distance * 0.05;
 
         gsap.to(selector, {
@@ -109,11 +109,11 @@ export default function BounceCards({
   const resetSiblings = () => {
     if (!enableHover) return;
 
-    images.forEach((_, i) => {
-      const selector = `.card-${i}`;
+    images.forEach((_, cardIndex) => {
+      const selector = `.card-${cardIndex}`;
       gsap.killTweensOf(selector);
 
-      const baseTransform = transformStyles[i] || 'none';
+      const baseTransform = transformStyles[cardIndex] || 'none';
       gsap.to(selector, {
         transform: baseTransform,
         duration: 0.4,
@@ -131,22 +131,22 @@ export default function BounceCards({
         height: containerHeight,
       }}
     >
-      {images.map((src, idx) => (
+      {images.map((src, cardIndex) => (
         <div
-          key={idx}
-          className={`card card-${idx} absolute w-[200px] aspect-square border-8 border-white rounded-[30px] overflow-hidden`}
+          key={cardIndex}
+          className={`card card-${cardIndex} absolute w-[200px] aspect-square border-8 border-white rounded-[30px] overflow-hidden`}
           style={{
             boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
-            transform: transformStyles[idx] || 'none',
+            transform: transformStyles[cardIndex] || 'none',
           }}
-          onMouseEnter={() => pushSiblings(idx)}
+          onMouseEnter={() => pushSiblings(cardIndex)}
           onMouseLeave={resetSiblings}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className='w-full h-full object-cover'
             src={src}
-            alt={`card-${idx}`}
+            alt={`card-${cardIndex}`}
           />
         </div>
       ))}

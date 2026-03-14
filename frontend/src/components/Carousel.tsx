@@ -79,7 +79,7 @@ export default function Carousel({
 
   const carouselItems = loop ? [...items, items[0]] : items;
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const x = useMotionValue(0);
+  const trackXPosition = useMotionValue(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [, setIsResetting] = useState<boolean>(false);
 
@@ -125,7 +125,7 @@ export default function Carousel({
   const handleAnimationComplete = () => {
     if (loop && currentIndex === carouselItems.length - 1) {
       setIsResetting(true);
-      x.set(0);
+      trackXPosition.set(0);
       setCurrentIndex(0);
       setTimeout(() => setIsResetting(false), 50);
     }
@@ -183,7 +183,7 @@ export default function Carousel({
           gap: `${GAP}px`,
           perspective: 1000,
           perspectiveOrigin: `${currentIndex * trackItemOffset + itemWidth / 2}px 50%`,
-          x,
+          x: trackXPosition,
         }}
         onDragEnd={handleDragEnd}
         animate={{ x: -(currentIndex * trackItemOffset) }}
@@ -197,7 +197,7 @@ export default function Carousel({
           ];
           const outputRange = [90, 0, -90];
           // eslint-disable-next-line react-hooks/rules-of-hooks
-          const rotateY = useTransform(x, range, outputRange, { clamp: false });
+          const rotateY = useTransform(trackXPosition, range, outputRange, { clamp: false });
           return (
             <motion.div
               key={index}
