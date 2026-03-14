@@ -169,14 +169,14 @@ export const Plasma: React.FC<PlasmaProps> = ({
       res[1] = gl.drawingBufferHeight;
     };
 
-    const ro = new ResizeObserver(setSize);
-    ro.observe(containerRef.current);
+    const resizeObserver = new ResizeObserver(setSize);
+    resizeObserver.observe(containerRef.current);
     setSize();
 
-    let raf = 0;
-    const t0 = performance.now();
-    const loop = (t: number) => {
-      const timeValue = (t - t0) * 0.001;
+    let animationFrameId = 0;
+    const startTime = performance.now();
+    const loop = (timestamp: number) => {
+      const timeValue = (timestamp - startTime) * 0.001;
 
       if (direction === 'pingpong') {
         const cycle = Math.sin(timeValue * 0.5) * directionMultiplier;
@@ -185,13 +185,13 @@ export const Plasma: React.FC<PlasmaProps> = ({
 
       (program.uniforms.iTime as any).value = timeValue;
       renderer.render({ scene: mesh });
-      raf = requestAnimationFrame(loop);
+      animationFrameId = requestAnimationFrame(loop);
     };
-    raf = requestAnimationFrame(loop);
+    animationFrameId = requestAnimationFrame(loop);
 
     return () => {
-      cancelAnimationFrame(raf);
-      ro.disconnect();
+      cancelAnimationFrame(animationFrameId);
+      resizeObserver.disconnect();
       if (mouseInteractive && containerRef.current) {
         containerRef.current.removeEventListener('mousemove', handleMouseMove);
       }

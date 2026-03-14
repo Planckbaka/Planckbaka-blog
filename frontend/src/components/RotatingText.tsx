@@ -88,42 +88,41 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
       const currentText: string = texts[currentTextIndex];
       if (splitBy === 'characters') {
         const words = currentText.split(' ');
-        return words.map((word, i) => ({
+        return words.map((word, wordIndex) => ({
           characters: splitIntoCharacters(word),
-          needsSpace: i !== words.length - 1,
+          needsSpace: wordIndex !== words.length - 1,
         }));
       }
       if (splitBy === 'words') {
-        return currentText.split(' ').map((word, i, arr) => ({
+        return currentText.split(' ').map((word, wordIndex, wordArray) => ({
           characters: [word],
-          needsSpace: i !== arr.length - 1,
+          needsSpace: wordIndex !== wordArray.length - 1,
         }));
       }
       if (splitBy === 'lines') {
-        return currentText.split('\n').map((line, i, arr) => ({
+        return currentText.split('\n').map((line, lineIndex, lineArray) => ({
           characters: [line],
-          needsSpace: i !== arr.length - 1,
+          needsSpace: lineIndex !== lineArray.length - 1,
         }));
       }
 
-      return currentText.split(splitBy).map((part, i, arr) => ({
+      return currentText.split(splitBy).map((part, partIndex, partArray) => ({
         characters: [part],
-        needsSpace: i !== arr.length - 1,
+        needsSpace: partIndex !== partArray.length - 1,
       }));
     }, [texts, currentTextIndex, splitBy]);
 
     const getStaggerDelay = useCallback(
       (index: number, totalChars: number): number => {
-        const total = totalChars;
         if (staggerFrom === 'first') return index * staggerDuration;
         if (staggerFrom === 'last')
-          return (total - 1 - index) * staggerDuration;
+          return (totalChars - 1 - index) * staggerDuration;
         if (staggerFrom === 'center') {
-          const center = Math.floor(total / 2);
+          const center = Math.floor(totalChars / 2);
           return Math.abs(center - index) * staggerDuration;
         }
         if (staggerFrom === 'random') {
-          const randomIndex = Math.floor(Math.random() * total);
+          const randomIndex = Math.floor(Math.random() * totalChars);
           return Math.abs(randomIndex - index) * staggerDuration;
         }
         return Math.abs((staggerFrom as number) - index) * staggerDuration;
@@ -224,7 +223,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
             {elements.map((wordObj, wordIndex, array) => {
               const previousCharsCount = array
                 .slice(0, wordIndex)
-                .reduce((sum, word) => sum + word.characters.length, 0);
+                .reduce((totalCharCount, word) => totalCharCount + word.characters.length, 0);
               return (
                 <span
                   key={wordIndex}
@@ -241,7 +240,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
                         delay: getStaggerDelay(
                           previousCharsCount + charIndex,
                           array.reduce(
-                            (sum, word) => sum + word.characters.length,
+                            (totalCharCount, word) => totalCharCount + word.characters.length,
                             0
                           )
                         ),
